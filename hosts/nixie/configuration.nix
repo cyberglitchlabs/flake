@@ -77,20 +77,16 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.defaultUserShell = pkgs.zsh;
-  users.groups.plugdev = { };
-  users.users.jason = {
-    shell = pkgs.zsh;
-    isNormalUser = true;
-    extraGroups = [ 
-      "wheel" "plugdev" "video" "networkmanager" "lp"
-    ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      firefox
-      google-chrome
-      chromium
-  #     thunderbird
-    ];
+  users = {
+    defaultUserShell = pkgs.zsh;
+    groups.plugdev = { };
+    users.jason = {
+      shell = pkgs.zsh;
+      isNormalUser = true;
+      extraGroups = [ 
+        "wheel" "plugdev" "video" "networkmanager" "lp"
+      ]; # Enable ‘sudo’ for the user.
+    };
   };
   home-manager = {
     # also pass inputs to home-manager modules
@@ -108,11 +104,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     usbutils
-    vscode
-    git
     waybar
     mako
     libnotify
