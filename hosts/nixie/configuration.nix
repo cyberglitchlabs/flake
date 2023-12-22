@@ -33,47 +33,30 @@
     trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
   }; 
 
-  networking.hostName = "nixie"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking = {
+    hostName = "nixie"; # Define your hostname.
+    networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  };
 
-  # Set your time zone.
   time.timeZone = "America/Chicago";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkbOptions in tty.
-  # };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.opengl.enable = true;
-  hardware.nvidia.modesetting.enable = true;
-  hardware.bluetooth.enable = true;
-
-  # Enable the GNOME Desktop Environment.
   services.xserver = {
+    enable = true;
+    videoDrivers = [ "nvidia" ];
+    layout = "us";
     displayManager.gdm = {
       enable = true;
       wayland = true;
-  # lightdm.enable = true;
-  #    defaultSession = "gnome";
-    };
-  };
-  #services.xserver.desktopManager.gnome.enable = true;
-  
+  }; 
 
-  # Configure keymap in X11
-  services.xserver.layout = "us";
-  # services.xserver.xkbOptions = {
-  #   "eurosign:e";
-  #   "caps:escape" # map caps to escape.
-  # };
+  hardware = {
+    pulseaudio.enable = false;
+    opengl.enable = true;
+    nvidia.modesetting.enable = true;
+    bluetooth.enable = true;
+  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -92,9 +75,6 @@
     jack.enable = true;
   };
 
-  hardware.pulseaudio.enable = false;
-
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.defaultUserShell = pkgs.zsh;
   users.groups.plugdev = { };
@@ -103,7 +83,7 @@
     isNormalUser = true;
     extraGroups = [ 
       "wheel" "plugdev" "video" "networkmanager" "lp"
-     ]; # Enable ‘sudo’ for the user.
+    ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       firefox
       google-chrome
@@ -153,17 +133,7 @@
   };
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
   # Open ports in the firewall.
