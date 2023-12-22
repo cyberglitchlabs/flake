@@ -35,7 +35,7 @@
 
   networking = {
     hostName = "nixie"; # Define your hostname.
-    networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+    networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   };
 
   time.timeZone = "America/Chicago";
